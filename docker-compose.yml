@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  kubernetes-jobs-api:
+    container_name: kubernetes-jobs-api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    working_dir: /var/www/html
+    ports:
+    - 8087:8080
+    volumes:
+      - ./:/var/www/html
+    extra_hosts:
+      - "kubernetes-jobs-api.docker:127.0.0.1"
+
+  kubernetes-jobs-api-database:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'kubernetes-jobs-api'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
